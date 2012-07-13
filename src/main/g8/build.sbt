@@ -1,12 +1,12 @@
-name := "$name$"
+name := "k"
 
-version := "$version$"
+version := "0.1.0-SNAPSHOT"
 
-organization := "$organization$"
+organization := "myorg"
 
 // Scala compiler settings
 
-scalaVersion := "$scalaversion$"
+scalaVersion := "2.9.2"
 
 scalacOptions ++= Seq ("-deprecation", "-unchecked")
 
@@ -33,10 +33,7 @@ parallelExecution in Test := false
 
 libraryDependencies ++=
     Seq (
-        "com.googlecode.kiama" %% "kiama" % "1.3.0",
-        "junit" % "junit" % "4.10" % "test",
-        "org.scalatest" %% "scalatest" % "1.7.1" % "test",
-        "org.scalacheck" %% "scalacheck" % "1.9" % "test"
+        "com.googlecode.kiama" %% "kiama" % "1.3.0"
     )
 
 resolvers += "Sonatype OSS Snapshots Repository" at
@@ -75,7 +72,7 @@ unmanagedResources in Test <<= scalaSource map { s => {
 
 seq (sbtRatsSettings : _*)
 
-ratsMainModule <<= scalaSource { _ / "Parser.syntax" }
+ratsMainModule <<= scalaSource { _ / "syntax" / "ExpParser.syntax" }
 
 ratsUseScalaLists := true
 

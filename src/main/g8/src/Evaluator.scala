@@ -4,13 +4,13 @@
 object Evaluator {
         
     import org.kiama.attribution.Attribution.attr
-    import Syntax._
+    import syntax.Syntax._
 
-    val value : Exp => Int =
+    val expvalue : Exp => Int =
         attr {
             case Num (i)    => i
-            case Add (l, r) => (l->value) + (r->value)
-            case Mul (l, r) => (l->value) * (r->value)
+            case Add (l, r) => (l->expvalue) + (r->expvalue)
+            case Mul (l, r) => (l->expvalue) * (r->expvalue)
         }
 
 }

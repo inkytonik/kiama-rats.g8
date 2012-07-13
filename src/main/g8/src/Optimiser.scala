@@ -1,7 +1,7 @@
 object Optimiser {
 
     import org.kiama.rewriting.Rewriter.{attempt, bottomup, rewrite, rule}
-    import Syntax._
+    import syntax.Syntax._
 
     def optimise (e : Exp) : Exp =
         rewrite (optimiser) (e)

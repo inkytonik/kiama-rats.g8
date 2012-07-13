@@ -1,49 +1,37 @@
-import org.kiama.util.ParsingREPL
+import org.kiama.util.CompilerBase
+import syntax.PrettyPrinter
+import syntax.Syntax.Exp
 
-/**
- * A top-level read-eval-print loop.  Reads a simple arithmetic expression
- * and prints it, its value and variants.  E.g.
- *
- * exp> 0 + 4 * 1  
- * e = Add(Num(0),Mul(Num(4),Num(1)))
- * e tree:
- * Add (Num (0), Mul (Num (4), Num (1)))
- * e tree pretty printed:
- * (0 + (4 * 1))
- * value (e) = 4
- * e optimised = Num(4)
- * value (e optimised) = 4
- */
-object Main extends ParsingREPL[Exp] with Parser {
+object Main extends CompilerBase[Exp] with PrettyPrinter {
 
-    import Evaluator.value
-    import PrettyPrinter.{pretty, pretty_any}
+    import Evaluator.expvalue
+    import java.io.Reader
     import Optimiser.optimise
-    import Syntax._
+    import org.kiama.attribution.Attribution.initTree
+    import org.kiama.util.{Console, Emitter}
+    import org.kiama.util.Messaging._
+    import syntax.ExpParser
 
-    override def setup (args : Array[String]) : Boolean = {
-        println ("Enter expressions using numbers, addition and multiplication.")
-        println (" e.g., (1 + 2) * 3 or 0 + 4 * 1")
-        true
+    def makeast (reader : Reader, filename : String, emitter : Emitter) : Either[Exp,String] = {
+        val p = new ExpParser (reader, filename)
+        val pr = p.pExp (0)
+        if (pr.hasValue)
+            Left (p.value (pr).asInstanceOf[Exp])
+        else
+            Right (p.format (pr.parseError))
     }
 
-    override def prompt () = "exp> "
-
-    /**
-     * Print the expression as a value, as a tree, pretty printed.
-     * Print its value. Optimise it and then print the optimised
-     * expression and its value.
-     */
-    def process (e : Exp) {
+    def process (e : Exp, console : Console, emitter : Emitter) : Boolean = {
         println ("e = " + e)
         println ("e tree:")
         println (pretty_any (e))
         println ("e tree pretty printed:")
         println (pretty (e))
-        println ("value (e) = " + value (e))
+        println ("value (e) = " + expvalue (e))
         val o = optimise (e)
         println ("e optimised = " + o)
-        println ("value (e optimised) = " + value (o))
+        println ("value (e optimised) = " + expvalue (o))
+        true
     }
 
 }
