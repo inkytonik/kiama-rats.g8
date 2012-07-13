@@ -17,7 +17,7 @@ import org.kiama.util.ParsingREPL
 object Main extends ParsingREPL[Exp] with Parser {
 
     import Evaluator.value
-    import PrettyPrinter.{pretty, product}
+    import PrettyPrinter.{pretty, pretty_any}
     import Optimiser.optimise
     import Syntax._
 
@@ -37,7 +37,7 @@ object Main extends ParsingREPL[Exp] with Parser {
     def process (e : Exp) {
         println ("e = " + e)
         println ("e tree:")
-        println (pretty (product (e)))
+        println (pretty_any (e))
         println ("e tree pretty printed:")
         println (pretty (e))
         println ("value (e) = " + value (e))
