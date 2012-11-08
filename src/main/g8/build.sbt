@@ -51,30 +51,38 @@ resolvers ++= Seq (
 
 scalaSource <<= baseDirectory { _ / "src" }
 
-unmanagedSources in Test <<= scalaSource map { s => {
+scalaSource in Compile <<= scalaSource
+
+scalaSource in Test <<= scalaSource
+
+unmanagedSources in Test <<= (scalaSource in Test) map { s => {
     (s ** "*Tests.scala").get
 }}
 
-unmanagedSources in Compile <<= (scalaSource, unmanagedSources in Test) map { (s, tests) =>
-    ((s ** "*.scala") --- tests).get
-}
+unmanagedSources in Compile <<=
+    (scalaSource in Compile, unmanagedSources in Test) map { (s, tests) =>
+        ((s ** "*.scala") --- tests).get
+    }
 
 // Resources
 
-unmanagedResourceDirectories <<= scalaSource { Seq (_) }
+unmanagedResourceDirectories in Compile <<= (scalaSource in Compile) { Seq (_) }
 
-unmanagedResourceDirectories in Test <<= unmanagedResourceDirectories
+unmanagedResourceDirectories in Test <<= unmanagedResourceDirectories in Compile
+
+// There are no compile resources
+unmanagedResources in Compile := Seq ()
 
 // Test resources are the non-Scala files in the source that are not hidden
-unmanagedResources in Test <<= scalaSource map { s => {
+unmanagedResources in Test <<= (scalSource in Test) map { s => {
     (s ** (-"*.scala" && -HiddenFileFilter)).get
 }}
 
 // Rats! setup
 
-seq (sbtRatsSettings : _*)
+sbtRatsSettings
 
-ratsMainModule <<= scalaSource { _ / "syntax" / "ExpParser.syntax" }
+ratsMainModule <<= (scalaSource in Compile) { _ / "syntax" / "ExpParser.syntax" }
 
 ratsUseScalaLists := true
 
@@ -87,4 +95,3 @@ ratsDefineASTClasses := true
 ratsDefinePrettyPrinter := true
 
 ratsUseKiama := true
-
