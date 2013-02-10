@@ -33,7 +33,7 @@ parallelExecution in Test := false
 
 libraryDependencies ++=
     Seq (
-        "com.googlecode.kiama" %% "kiama" % "1.3.0"
+        "com.googlecode.kiama" %% "kiama" % "1.4.0"
     )
 
 resolvers ++= Seq (
