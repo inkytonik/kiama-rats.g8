@@ -74,7 +74,7 @@ unmanagedResourceDirectories in Test <<= unmanagedResourceDirectories in Compile
 unmanagedResources in Compile := Seq ()
 
 // Test resources are the non-Scala files in the source that are not hidden
-unmanagedResources in Test <<= (scalSource in Test) map { s => {
+unmanagedResources in Test <<= (scalaSource in Test) map { s => {
     (s ** (-"*.scala" && -HiddenFileFilter)).get
 }}
 
