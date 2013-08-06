@@ -21,7 +21,7 @@ object Main extends CompilerBase[Exp] with PrettyPrinter {
             Right (p.format (pr.parseError))
     }
 
-    def process (e : Exp, console : Console, emitter : Emitter) : Boolean = {
+    def process (filename : String, e : Exp, console : Console, emitter : Emitter) : Boolean = {
         println ("e = " + e)
         println ("e tree:")
         println (pretty_any (e))
