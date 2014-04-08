@@ -1,18 +1,21 @@
-import org.kiama.util.CompilerBase
+import org.kiama.util.{CompilerBase, Config}
 import syntax.PrettyPrinter
 import syntax.Syntax.Exp
 
-object Main extends CompilerBase[Exp] with PrettyPrinter {
+object Main extends CompilerBase[Exp,Config] with PrettyPrinter {
 
     import Evaluator.expvalue
     import java.io.Reader
     import Optimiser.optimise
     import org.kiama.attribution.Attribution.initTree
     import org.kiama.util.{Console, Emitter}
-    import org.kiama.util.Messaging._
     import syntax.ExpParser
+    import scala.collection.immutable.Seq
 
-    def makeast (reader : Reader, filename : String, emitter : Emitter) : Either[Exp,String] = {
+    def createConfig (args : Seq[String], emitter : Emitter = new Emitter) : Config =
+        new Config (args, emitter)
+
+    def makeast (reader : Reader, filename : String, config : Config) : Either[Exp,String] = {
         val p = new ExpParser (reader, filename)
         val pr = p.pExp (0)
         if (pr.hasValue)
@@ -21,17 +24,17 @@ object Main extends CompilerBase[Exp] with PrettyPrinter {
             Right (p.format (pr.parseError))
     }
 
-    def process (filename : String, e : Exp, console : Console, emitter : Emitter) : Boolean = {
-        println ("e = " + e)
-        println ("e tree:")
-        println (pretty_any (e))
-        println ("e tree pretty printed:")
-        println (pretty (e))
-        println ("value (e) = " + expvalue (e))
+    override def process (filename : String, e : Exp, config : Config) {
+        val emitter = config.emitter
+        emitter.emitln ("e = " + e)
+        emitter.emitln ("e tree:")
+        emitter.emitln (pretty_any (e))
+        emitter.emitln ("e tree pretty printed:")
+        emitter.emitln (pretty (e))
+        emitter.emitln ("value (e) = " + expvalue (e))
         val o = optimise (e)
-        println ("e optimised = " + o)
-        println ("value (e optimised) = " + expvalue (o))
-        true
+        emitter.emitln ("e optimised = " + o)
+        emitter.emitln ("value (e optimised) = " + expvalue (o))
     }
 
 }
