@@ -1,14 +1,14 @@
 module syntax.ExpParser;
 
 header {
-    import syntax.Syntax.*;
+    import syntax.ExpParserSyntax.*;
 }
 
 Program =
-    Exp.
+    Exp Exp.
 
 Exp {paren} =
-    Exp "+" Exp     {Add, left, 2}    
+    Exp "+" Exp     {Add, left, 2}
   | Exp "*" Exp     {Mul, left, 1}
   | Integer         {Num, 1: Integer.parseInt : Int}
   | '(' Exp ')'.
@@ -16,7 +16,7 @@ Exp {paren} =
 Integer : String =
   Digits Spacing.
 
-Digits : String  =
+Digits : String =
   Digit+.
 
 Digit : String =

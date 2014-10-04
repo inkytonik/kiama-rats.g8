@@ -1,21 +1,20 @@
-import org.kiama.util.{CompilerBase, Config}
-import syntax.PrettyPrinter
-import syntax.Syntax.Exp
+import org.kiama.util.Compiler
+import syntax.ExpParserPrettyPrinter
+import syntax.ExpParserSyntax.Exp
 
-object Main extends CompilerBase[Exp,Config] with PrettyPrinter {
+object Main extends Compiler[Exp] with ExpParserPrettyPrinter {
 
     import Evaluator.expvalue
     import java.io.Reader
     import Optimiser.optimise
     import org.kiama.attribution.Attribution.initTree
-    import org.kiama.util.{Console, Emitter}
+    import org.kiama.util.Config
     import syntax.ExpParser
     import scala.collection.immutable.Seq
 
-    def createConfig (args : Seq[String], emitter : Emitter = new Emitter) : Config =
-        new Config (args, emitter)
+    val parser = null
 
-    def makeast (reader : Reader, filename : String, config : Config) : Either[Exp,String] = {
+    override def makeast (reader : Reader, filename : String, config : Config) : Either[Exp,String] = {
         val p = new ExpParser (reader, filename)
         val pr = p.pExp (0)
         if (pr.hasValue)
@@ -25,16 +24,16 @@ object Main extends CompilerBase[Exp,Config] with PrettyPrinter {
     }
 
     override def process (filename : String, e : Exp, config : Config) {
-        val emitter = config.emitter
-        emitter.emitln ("e = " + e)
-        emitter.emitln ("e tree:")
-        emitter.emitln (pretty_any (e))
-        emitter.emitln ("e tree pretty printed:")
-        emitter.emitln (pretty (e))
-        emitter.emitln ("value (e) = " + expvalue (e))
+        val output = config.output
+        output.emitln ("e = " + e)
+        output.emitln ("e tree:")
+        output.emitln (pretty_any (e))
+        output.emitln ("e tree pretty printed:")
+        output.emitln (pretty (e))
+        output.emitln ("value (e) = " + expvalue (e))
         val o = optimise (e)
-        emitter.emitln ("e optimised = " + o)
-        emitter.emitln ("value (e optimised) = " + expvalue (o))
+        output.emitln ("e optimised = " + o)
+        output.emitln ("value (e optimised) = " + expvalue (o))
     }
 
 }

@@ -2,9 +2,9 @@
  * Use attribution to evaluate an expression.
  */
 object Evaluator {
-        
+
     import org.kiama.attribution.Attribution.attr
-    import syntax.Syntax._
+    import syntax.ExpParserSyntax._
 
     val expvalue : Exp => Int =
         attr {

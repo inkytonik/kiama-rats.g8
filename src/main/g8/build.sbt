@@ -14,7 +14,9 @@ scalacOptions ++= Seq ("-deprecation", "-feature", "-unchecked")
 
 logLevel := Level.Info
 
-shellPrompt <<= (name, version) { (n, v) => _ => n + " " + v + "> " }
+shellPrompt <<= (name, version) { (n, v) =>
+     _ => n + " " + v + "> "
+}
 
 // Fork the runs and connect sbt's input and output to the forked process so
 // that we are immune to version clashes with the JLine library used by sbt
@@ -33,7 +35,7 @@ parallelExecution in Test := false
 
 libraryDependencies ++=
     Seq (
-        "com.googlecode.kiama" %% "kiama" % "1.5.2"
+        "com.googlecode.kiama" %% "kiama" % "1.7.0"
     )
 
 resolvers ++= Seq (
@@ -81,8 +83,6 @@ unmanagedResources in Test <<= (scalaSource in Test) map { s => {
 // Rats! setup
 
 sbtRatsSettings
-
-ratsMainModule <<= (scalaSource in Compile) { _ / "syntax" / "ExpParser.syntax" }
 
 ratsUseScalaLists := true
 
