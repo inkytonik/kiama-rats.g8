@@ -9,8 +9,8 @@ object Evaluator {
     val expvalue : Exp => Int =
         attr {
             case Num (i)    => i
-            case Add (l, r) => (l->expvalue) + (r->expvalue)
-            case Mul (l, r) => (l->expvalue) * (r->expvalue)
+            case Add (l, r) => expvalue (l) + expvalue (r)
+            case Mul (l, r) => expvalue (l) * expvalue (r)
         }
 
 }
