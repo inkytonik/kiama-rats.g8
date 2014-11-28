@@ -5,7 +5,7 @@ header {
 }
 
 Program =
-    Exp Exp.
+    Exp.
 
 Exp {paren} =
     Exp "+" Exp     {Add, left, 2}
