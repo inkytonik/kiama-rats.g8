@@ -1,9 +1,10 @@
+import org.kiama.attribution.Attribution
+
 /**
  * Use attribution to evaluate an expression.
  */
-object Evaluator {
+object Evaluator extends Attribution {
 
-    import org.kiama.attribution.Attribution.attr
     import syntax.ExpParserSyntax._
 
     val expvalue : Exp => Int =

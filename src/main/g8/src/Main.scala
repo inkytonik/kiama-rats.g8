@@ -7,7 +7,6 @@ object Main extends Compiler[Exp] with ExpParserPrettyPrinter {
     import Evaluator.expvalue
     import java.io.Reader
     import Optimiser.optimise
-    import org.kiama.attribution.Attribution.initTree
     import org.kiama.util.Config
     import syntax.ExpParser
     import scala.collection.immutable.Seq
