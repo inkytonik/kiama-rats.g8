@@ -94,4 +94,4 @@ ratsDefineASTClasses := true
 
 ratsDefinePrettyPrinter := true
 
-ratsUseKiama := true
+ratsUseKiama := 2
