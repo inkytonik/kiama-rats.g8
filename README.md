@@ -1,4 +1,4 @@
-This is a giter8 template for sbt 0.11.x (or later) projects in the style that
+This is a giter8 template for sbt 0.13.x projects in the style that
 I (inkytonik) commonly use. The generated project will be set up to use the
 [Kiama language processing library](http://kiama.googlecode.com) and will
 contain a simple example of Kiama use with the
@@ -7,7 +7,7 @@ the
 [sbt-rats sbt plugin](https://code.google.com/p/sbt-rats/).
 
 See [`inkytonik/kiama.g8`](https://github.com/inkytonik/kiama.g8) for
-variant that uses Kiama without Rats!,  and 
+variant that uses Kiama without Rats!,  and
 [`inkytonik/plain.g8`](https://github.com/inkytonik/plain.g8) for a variant
 that does not use Kiama or Rats!.
 
@@ -36,7 +36,7 @@ from files
 ### Usage
 
 Install [giter8 (g8)](http://github.com/n8han/giter8#readme) and [sbt
-0.11.x](https://github.com/harrah/xsbt/wiki/Setup) (or later).
+0.13.x](http://www.scala-sbt.org).
 
 In a shell run the following:
 
