@@ -1,14 +1,16 @@
 import org.kiama.util.Compiler
-import syntax.ExpParserPrettyPrinter
 import syntax.ExpParserSyntax.Exp
 
-object Main extends Compiler[Exp] with ExpParserPrettyPrinter {
+object Main extends Compiler[Exp] {
 
     import Evaluator.expvalue
     import java.io.Reader
     import Optimiser.optimise
+    import org.kiama.output.PrettyPrinterTypes.Document
     import org.kiama.util.Config
     import syntax.ExpParser
+    import syntax.ExpParserPrettyPrinter
+    import syntax.ExpParserPrettyPrinter.{any, pretty}
     import scala.collection.immutable.Seq
 
     val parser = null
@@ -26,13 +28,16 @@ object Main extends Compiler[Exp] with ExpParserPrettyPrinter {
         val output = config.output
         output.emitln ("e = " + e)
         output.emitln ("e tree:")
-        output.emitln (pretty_any (e))
+        output.emitln (pretty (any (e)).layout)
         output.emitln ("e tree pretty printed:")
-        output.emitln (pretty (e))
+        output.emitln (format (e).layout)
         output.emitln ("value (e) = " + expvalue (e))
         val o = optimise (e)
         output.emitln ("e optimised = " + o)
         output.emitln ("value (e optimised) = " + expvalue (o))
     }
+
+    def format (ast : Exp) : Document =
+        ExpParserPrettyPrinter.format (ast, 5)
 
 }
