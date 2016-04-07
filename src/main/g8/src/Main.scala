@@ -10,7 +10,7 @@ object Main extends Compiler[Exp] {
     import org.kiama.util.Config
     import syntax.ExpParser
     import syntax.ExpParserPrettyPrinter
-    import syntax.ExpParserPrettyPrinter.{any, pretty}
+    import syntax.ExpParserPrettyPrinter.{any, layout}
     import scala.collection.immutable.Seq
 
     val parser = null
@@ -25,10 +25,10 @@ object Main extends Compiler[Exp] {
     }
 
     override def process (filename : String, e : Exp, config : Config) {
-        val output = config.output
+        val output = config.output()
         output.emitln ("e = " + e)
         output.emitln ("e tree:")
-        output.emitln (pretty (any (e)).layout)
+        output.emitln (layout (any (e)))
         output.emitln ("e tree pretty printed:")
         output.emitln (format (e).layout)
         output.emitln ("value (e) = " + expvalue (e))
