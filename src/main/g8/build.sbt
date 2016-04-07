@@ -35,7 +35,7 @@ parallelExecution in Test := false
 
 libraryDependencies ++=
     Seq (
-        "com.googlecode.kiama" %% "kiama" % "2.0.0"
+        "org.bitbucket.inkytonik.kiama" %% "kiama" % "2.0.0"
     )
 
 resolvers ++= Seq (
@@ -84,7 +84,7 @@ unmanagedResources in Test <<= (scalaSource in Test) map { s => {
 
 sbtRatsSettings
 
-ratsUseScalaLists := true
+ratsScalaRepetitionType := Some (VectorType)
 
 ratsUseScalaOptions := true
 

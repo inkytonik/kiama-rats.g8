@@ -1,30 +1,31 @@
-import org.kiama.util.Compiler
+import org.bitbucket.inkytonik.kiama.util.{CompilerBase, Config}
 import syntax.ExpParserSyntax.Exp
 
-object Main extends Compiler[Exp] {
+object Main extends CompilerBase[Exp,Config] {
 
     import Evaluator.expvalue
     import java.io.Reader
     import Optimiser.optimise
-    import org.kiama.output.PrettyPrinterTypes.Document
-    import org.kiama.util.Config
+    import org.bitbucket.inkytonik.kiama.output.PrettyPrinterTypes.Document
+    import org.bitbucket.inkytonik.kiama.util.Source
+    import org.bitbucket.inkytonik.kiama.util.Messaging.Messages
     import syntax.ExpParser
     import syntax.ExpParserPrettyPrinter
     import syntax.ExpParserPrettyPrinter.{any, layout}
-    import scala.collection.immutable.Seq
 
-    val parser = null
+    def createConfig(args : Seq[String]) : Config =
+        new Config(args)
 
-    override def makeast (reader : Reader, filename : String, config : Config) : Either[Exp,String] = {
-        val p = new ExpParser (reader, filename)
+    override def makeast (source : Source, config : Config) : Either[Exp,Messages] = {
+        val p = new ExpParser (source, positions)
         val pr = p.pExp (0)
         if (pr.hasValue)
             Left (p.value (pr).asInstanceOf[Exp])
         else
-            Right (p.format (pr.parseError))
+            Right (Vector (p.errorToMessage (pr.parseError)))
     }
 
-    override def process (filename : String, e : Exp, config : Config) {
+    def process (source : Source, e : Exp, config : Config) {
         val output = config.output()
         output.emitln ("e = " + e)
         output.emitln ("e tree:")
@@ -37,7 +38,7 @@ object Main extends Compiler[Exp] {
         output.emitln ("value (e optimised) = " + expvalue (o))
     }
 
-    def format (ast : Exp) : Document =
+    override def format (ast : Exp) : Document =
         ExpParserPrettyPrinter.format (ast, 5)
 
 }

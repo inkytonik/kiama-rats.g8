@@ -1,4 +1,4 @@
-import org.kiama.attribution.Attribution
+import org.bitbucket.inkytonik.kiama.attribution.Attribution
 
 /**
  * Use attribution to evaluate an expression.
