@@ -25,11 +25,7 @@ from files
 
 * uses sbt-rats plugin
 
-* sources and resources located directly under `src`
-
 * stub `Main` object with a dummy `main` method
-
-* tests located with sources with suffix `Tests.scala`
 
 * Mercurial `.hgignore` file
 
