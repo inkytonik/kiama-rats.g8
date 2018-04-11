@@ -33,7 +33,7 @@ outputStrategy in run := Some (StdoutOutput)
 
 libraryDependencies ++=
     Seq (
-        "org.bitbucket.inkytonik.kiama" %% "kiama" % "2.0.0"
+        "org.bitbucket.inkytonik.kiama" %% "kiama" % "2.2.0"
     )
 
 resolvers ++= Seq (
