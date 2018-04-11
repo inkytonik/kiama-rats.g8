@@ -59,7 +59,6 @@ Run the generated project on the file `input.exp` as follows:
     value (e) = 9
     e optimised = Mul(Add(Num(1),Num(2)),Num(3))
     value (e optimised) = 9
-    exp> ^D
     >
 
 where `$name$` is the value you entered when running the `g8` command.
