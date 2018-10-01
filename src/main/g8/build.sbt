@@ -44,8 +44,6 @@ resolvers ++= Seq (
 
 // Rats! setup
 
-sbtRatsSettings
-
 ratsScalaRepetitionType := Some (VectorType)
 
 ratsUseScalaOptions := true
