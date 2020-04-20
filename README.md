@@ -1,4 +1,4 @@
-This is a giter8 template for sbt 0.13.x projects in the style that
+This is a giter8 template for sbt 1.x projects in the style that
 I (inkytonik) commonly use. The generated project will be set up to use the
 [Kiama language processing library](http://kiama.googlecode.com) and will
 contain a simple example of Kiama use with the
@@ -27,24 +27,13 @@ from files
 
 * stub `Main` object with a dummy `main` method
 
-* Mercurial `.hgignore` file
-
 ### Usage
 
-Install [sbt 0.13.x](http://www.scala-sbt.org).
+Install [sbt 1.x](http://www.scala-sbt.org).
 
-If using sbt 0.13.13 or above:
+Then
 
     sbt new inkytonik/kiama-rats.g8
-
-Or alternatively, install [giter8 (g8)](http://github.com/n8han/giter8#readme) and in a shell run the following:
-
-In a shell run the following:
-
-    g8 inkytonik/kiama-rats.g8
-
-The `g8` command will prompt you for information needed to setup the
-project.
 
 Run the generated project on the file `input.exp` as follows:
 
@@ -61,5 +50,5 @@ Run the generated project on the file `input.exp` as follows:
     value (e optimised) = 9
     >
 
-where `$name$` is the value you entered when running the `g8` command.
+where `$name$` is the value you entered when running the `sbt new` command.
 Use Control-D to get out of the REPL.

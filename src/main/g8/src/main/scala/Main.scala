@@ -25,7 +25,7 @@ object Main extends CompilerBase[Exp,Config] {
             Right (Vector (p.errorToMessage (pr.parseError)))
     }
 
-    def process (source : Source, e : Exp, config : Config) {
+    def process (source : Source, e : Exp, config : Config) : Unit = {
         val output = config.output()
         output.emitln ("e = " + e)
         output.emitln ("e tree:")
