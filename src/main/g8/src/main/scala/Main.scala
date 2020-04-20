@@ -1,22 +1,25 @@
 import org.bitbucket.inkytonik.kiama.util.{CompilerBase, Config}
-import syntax.ExpParserSyntax.Exp
+import syntax.ExpParserSyntax.{ASTNode, Exp}
 
-object Main extends CompilerBase[Exp,Config] {
+object Main extends CompilerBase[ASTNode, Exp,Config] {
 
     import Evaluator.expvalue
     import java.io.Reader
     import Optimiser.optimise
     import org.bitbucket.inkytonik.kiama.output.PrettyPrinterTypes.Document
-    import org.bitbucket.inkytonik.kiama.util.Source
+    import org.bitbucket.inkytonik.kiama.util.{Positions, Source}
     import org.bitbucket.inkytonik.kiama.util.Messaging.Messages
     import syntax.ExpParser
     import syntax.ExpParserPrettyPrinter
     import syntax.ExpParserPrettyPrinter.{any, layout}
 
+    val name = "exp"
+
     def createConfig(args : Seq[String]) : Config =
         new Config(args)
 
     override def makeast (source : Source, config : Config) : Either[Exp,Messages] = {
+        val positions = new Positions
         val p = new ExpParser (source, positions)
         val pr = p.pExp (0)
         if (pr.hasValue)

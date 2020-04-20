@@ -42,7 +42,7 @@ Run the generated project on the file `input.exp` as follows:
     > run input.exp
     e = Add(Mul(Add(Num(1),Num(2)),Num(3)),Mul(Num(0),Num(7)))
     e tree:
-    Add (Mul (Add (Num (1), Num (2)), Num (3)), Mul (Num (0), Num (7)))
+    Add(Mul(Add(Num(1), Num(2)), Num(3)), Mul(Num(0), Num(7)))
     e tree pretty printed:
     (1 + 2) * 3 + 0 * 7
     value (e) = 9
